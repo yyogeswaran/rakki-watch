@@ -19,6 +19,9 @@ with sync_playwright() as p:
     page.wait_for_timeout(4000)
     html = page.content().lower()
     print("final url:", page.url, "| length:", len(html))
+    print("title:", page.title())
+    print("text:", page.inner_text("body")[:600].replace("\n", " | "))
+    page.screenshot(path="shot.png", full_page=True)
     if "access denied" in html or len(html) < 5000:
         print("Looks blocked")
     elif DATE in page.url and KEYWORD in html:
